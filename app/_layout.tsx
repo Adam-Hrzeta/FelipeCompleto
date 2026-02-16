@@ -48,17 +48,6 @@ console.log(isLoggedIn);
     return () => unsubscribe();
   }, []);
 
-  /* const checkStoredSession = async () => {
-    try {
-      const session = await AsyncStorage.getItem('userSession');
-      if (session) {
-        const userData = JSON.parse(session);
-        setIsLoggedIn(true);
-      }
-    } catch (error) {
-      console.error('Error al verificar la sesión guardada:', error);
-    }
-  }; */
 
   const checkStoredSession = async () => {
   try {
