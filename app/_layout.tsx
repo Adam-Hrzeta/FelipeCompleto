@@ -48,7 +48,7 @@ console.log(isLoggedIn);
     return () => unsubscribe();
   }, []);
 
-  const checkStoredSession = async () => {
+  /* const checkStoredSession = async () => {
     try {
       const session = await AsyncStorage.getItem('userSession');
       if (session) {
@@ -58,7 +58,21 @@ console.log(isLoggedIn);
     } catch (error) {
       console.error('Error al verificar la sesión guardada:', error);
     }
-  };
+  }; */
+
+  const checkStoredSession = async () => {
+  try {
+    const session = await AsyncStorage.getItem('userSession');
+
+    if (session) {
+      setIsLoggedIn(true);
+    }
+
+  } catch (error) {
+    console.error('Error al verificar la sesión guardada:', error);
+  }
+};
+
 
   useEffect(() => {
   if (isLoggedIn && loaded) {
