@@ -18,22 +18,20 @@ const firebaseConfig = {
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 
-// Configurar autenticación
-let auth: Auth;
-if (Platform.OS === 'web') {
-  auth = getAuth(app);
-} else {
-  auth = initializeAuth(app, {
-    persistence: ReactNativeAsyncStorage ? 
-      require('firebase/auth').getReactNativePersistence(ReactNativeAsyncStorage) : 
-      require('firebase/auth').inMemoryPersistence
-  });
-}
+// ✅ Auth con const (sin let)
+export const auth =
+  Platform.OS === "web"
+    ? getAuth(app)
+    : initializeAuth(app, {
+        persistence: require("firebase/auth").getReactNativePersistence(
+          ReactNativeAsyncStorage
+        ),
+      });
 
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 // Manejar sesión en SecureStore para móviles
-auth.onAuthStateChanged(async (user: any) => {
+auth.onAuthStateChanged(async (user) => {
   if (Platform.OS !== "web") {
     if (user) {
       await SecureStore.setItemAsync("userToken", JSON.stringify(user));
@@ -42,5 +40,3 @@ auth.onAuthStateChanged(async (user: any) => {
     }
   }
 });
-
-export { auth, db };
